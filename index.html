@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>  
+        <h1>Hello world</h1>
+        <p>Press enter to stop watching and get a record of all the events</p>
+
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
+        <button>Click button</button>
+        <input type="text" />
+        <input type="checkbox" />
+        <input type="radio" />
+        <select>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+        </select>
+        <textarea></textarea>
+        <audio src="https://www.w3schools.com/html/horse.mp3" controls></audio>
+    </body>
+
+    <script type="module">
+        import { Watcher } from './dist/index.esm.js'
+
+        const watcher = new Watcher()
+        watcher.watch((ev, name) => {
+            if (ev.key === 'Enter' && ev.type === 'keydown')  {
+                watcher.clear()
+                console.log(watcher.events)
+            }
+        })
+        
+    </script>
+</html>
+        
