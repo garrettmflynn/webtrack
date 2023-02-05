@@ -17,12 +17,10 @@ Int32 lpdwProcessId);
     }
 "@
  
-while(1)
-{
+
 $w = [apifuncs]::GetForegroundWindow()
 $len = [apifuncs]::GetWindowTextLength($w)
 $sb = New-Object text.stringbuilder -ArgumentList ($len + 1)
 $rtnlen = [apifuncs]::GetWindowText($w,$sb,$sb.Capacity)
-write-host "Window Title: $($sb.tostring())"
-sleep 1
-} 
+
+"$($sb.tostring())" # Return this value

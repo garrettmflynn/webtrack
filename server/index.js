@@ -18,27 +18,32 @@ const platform = process.platform
 let latestResult = null
 
 const onChange = (res) => {
-    console.log('New Active Window:', res)
+    console.log('New Active Window:', res.id, res)
 }
 
 const onResult = (res) => {
     if (platform === 'darwin') {
-        const [name, file, tab] = res.trim().split(', ')
-
-        res = {name, file, tab}
-        if (file.includes('Applications')) res.app = file.split('Applications:')[1].split('.app')[0]
+        const [name, path, title] = res.trim().split(', ')
+        res = {name, path, title}
+        if (path.includes('Applications')) res.origin = path.split('Applications:')[1].split('.app')[0]
+        res.id = `${title} - ${res.origin ?? path}`
+    } else if (platform === 'win32') {
+        const title = `${res}`
+        res = {title, id: title} // NOTE: To make this equivalent with Mac, we need to track the file and app name.
+    } else if (platform === 'linux'){
+        console.error('Linux outputs are not yet parsed...')
     }
 
     // Monitor for Changes
-    if (latestResult === JSON.stringify(res)) return
+    if (latestResult?.id === res?.id) return
     else {
         onChange(res)
-        latestResult = JSON.stringify(res)
+        latestResult = res
     }
 }
 
 const onError = (err) => {
-    console.error(`${platform} Error:`, err)
+    console.error(`${platform} Errors: `+ err)
 }
 
 const onComplete = () => {
@@ -51,6 +56,16 @@ const spawnProcess = (...args) => {
     child.stderr.on("data", onError)
     child.on("exit", onComplete);
     child.stdin.end(); //end input
+    // child.stdout.on("data",function(data){
+    //     console.log("Powershell Data: " + data);
+    // });
+    // child.stderr.on("data",function(data){
+    //     console.log("Powershell Errors: " + data);
+    // });
+    // child.on("exit",function(){
+    //     console.log("Powershell Script finished");
+    // });
+    // child.stdin.end(); //end input
 }
 
 const execCommand = (command) => {
