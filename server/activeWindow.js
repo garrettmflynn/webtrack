@@ -47,7 +47,7 @@ const onError = (err) => {
 }
 
 const onComplete = () => {
-    console.error(`${platform} Check Complete`)
+    // console.error(`${platform} Check Complete`)
 }
 
 const spawnProcess = (...args) => {
