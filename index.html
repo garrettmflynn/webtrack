@@ -22,13 +22,13 @@
     </body>
 
     <script type="module">
-        import { Watcher } from './dist/index.esm.js'
+        import { Tracker } from './dist/index.esm.js'
 
-        const watcher = new Watcher()
-        watcher.watch((ev, name) => {
+        const tracker = new Tracker()
+        tracker.start((ev, name) => {
             if (ev.key === 'Enter' && ev.type === 'keydown')  {
-                watcher.clear()
-                console.log(watcher.events)
+                tracker.stop()
+                console.log(tracker.events)
             }
         })
         

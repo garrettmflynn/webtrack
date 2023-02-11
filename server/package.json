@@ -4,6 +4,10 @@
   "description": "Quickly monitor all window and user behaviors",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "exports": {
+    "require": "./dist/index.node.js",
+    "import": "./dist/index.esm.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node index.js"

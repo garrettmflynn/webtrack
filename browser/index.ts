@@ -8,8 +8,8 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 type EventPayload = Partial<Writeable<Event>> & {timestamp: number, target: Event['target'], type: Event['type']}
 
 const toTransfer = [
-    'clientX',
-    'clientY',
+    'x',
+    'y',
     'deltaX',
     'deltaY',
     'deltaZ',
@@ -49,7 +49,7 @@ const toTransfer = [
 ]
 
 type CallbackType = (ev: EventPayload, raw: Event, name: string) => void
-export class Watcher {
+export class Tracker {
 
     on = false
     #callback?: CallbackType
@@ -69,10 +69,10 @@ export class Watcher {
             }
         })
         
-        if (typeof callback === 'function') this.watch(callback)
+        if (typeof callback === 'function') this.start(callback)
     }
 
-    watch = (callback?: CallbackType) => {
+    start = (callback?: CallbackType) => {
 
         if (typeof callback === 'function') this.#callback = callback // Replace the callback
 
@@ -88,7 +88,7 @@ export class Watcher {
 
     }
 
-    clear = () => {
+    stop = () => {
         this.#observer.disconnect()
         this.on = false
         this.#toRemove.forEach(remove => remove())
@@ -137,7 +137,7 @@ export class Watcher {
                     // Return to the user if they want it
                     const returnName = isDocument ? 'document' : name
                     if (this.#callback) this.#callback(payload, ev, returnName)
-                    if (this.#callbacks[name]) this.#callbacks[name](payload, ev, returnName)
+                    if (this.#callbacks[ev.type]) this.#callbacks[ev.type](payload, ev, returnName)
                 }
             }
 
