@@ -1,6 +1,6 @@
 {
   "name": "webtrack",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Quickly monitor all page and user behaviors",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -9,6 +9,9 @@
     "import": "./dist/index.esm.js",
     "default": "./dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "scripts": {
     "start": "tinybuild",
