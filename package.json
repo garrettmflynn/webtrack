@@ -1,9 +1,10 @@
 {
   "name": "webtrack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Quickly monitor all page and user behaviors",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "types": "dist/browser/index.d.ts",
   "exports": {
     "import": "./dist/index.esm.js",
     "default": "./dist/index.js"
